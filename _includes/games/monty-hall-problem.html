@@ -1,0 +1,237 @@
+<script src="{{ ASSET_PATH }}/style/js/jquery.min.js"></script>
+
+<style type="text/css">
+
+	div#game {
+		cursor: pointer;
+	}
+
+	.init_box {
+		width: 60px; 
+		height: 60px; 
+		margin: 10px; 
+		float: left; 
+		background-color: yellow;
+		text-align:center;
+		line-height: 60px;
+		font-size: xx-small;
+	}
+	.btn_box {
+		width: 70px; 
+		height: 30px; 
+		margin: 10px; 
+		float: left; 
+		background-color: white;
+		text-align:center;
+		line-height: 30px;
+		font-size: xx-small;
+		border-width: 1px;
+		border-style: solid;
+		border-color: green;
+		color: green;
+		CURSOR: hand;
+	}
+	.text_box {
+		width: 300px; 
+		height: 30px; 
+		margin: 10px; 
+		float: left; 
+		text-align:center;
+		line-height: 30px;
+		color: green;
+	}
+	.select_box {
+		border-width: 2px;
+		border-color: red;
+		border-style: solid;
+	}
+	.open_box {
+		background-color: green;
+		color: white;
+	}
+
+	.btn { 
+		BORDER-RIGHT: #7b9ebd 1px solid; 
+		PADDING-RIGHT: 10px; 
+		BORDER-TOP: #7b9ebd 1px solid; 
+		PADDING-LEFT: 10px; 
+		FONT-SIZE: 12px; 
+		BORDER-LEFT: #7b9ebd 1px solid; 
+		CURSOR: hand; 
+		COLOR: green; 
+		PADDING-TOP: 2px; 
+		BORDER-BOTTOM: #7b9ebd 1px solid 
+	} 
+
+    table {  
+        border: 1px solid rgba(50,118,177,0.167);  
+        padding:0;     
+        border-collapse: collapse;  
+        margin:0px auto; 
+    }  
+      
+    tr td th {  
+        border: 1px solid rgba(50,118,177,0.167);  
+        background: #fff;  
+        font-size:12px;  
+        padding: 3px 3px 3px 8px;  
+        color: #green; 
+        text-align:center; 
+    }  
+
+
+</style>
+
+<script type="text/javascript">
+	var cwin_num = 0;
+	var clost_num = 0;
+	var ncwin_num = 0;
+	var nclost_num = 0;
+	var game_num = 0;
+	var cgame_num =0;
+	var ncgame_num = 0;
+
+	var $newbox = $( "<div class='a'/>" ).html("点击选择").addClass("init_box");
+
+	function cc(aa, bb) {
+		if(aa!=bb) {$("#s" + bb).remove()}
+	}
+
+	function newGame(){
+		game_num++;
+		var i;
+		var i_id;
+		var prise = parseInt(Math.random() * 3);
+		var tt=0;
+
+		for(i=0; i<3; i++) {
+			i_id = game_num + "" + i;
+			$newbox.attr("id", i_id);
+			if(prise == i) {
+				$("#game").append($newbox.clone().addClass("prise"));
+			} else {
+				$("#game").append($newbox.clone());
+			}
+		}
+
+		$("#game").append("<br><br>");
+
+		$("#game").delegate(".a","click",function(){
+			$(this).addClass("select_box").html("我选这个");
+			
+			var $tt_div = $("<div style='clear:both;' id='s" + game_num + "'><div class='text_box'>请选择：To 换 or Not To 换?</div><div class='change btn_box'>换换更健康</div><div class='not_change btn_box'>换你妹夫啊</div></div>");
+
+			if( $("#game").append($tt_div) &&  (tt += 1) && cc(tt, game_num));	
+
+
+			//产生一个随机数1或2
+			var re = parseInt(Math.random() * 2) + 1;
+			var help_id;
+			var change_id;
+			var next_id;
+
+			var this_id = $(this).attr("id");
+			var index = this_id.substring(this_id.length - 1, this_id.length);
+
+
+			if( $(this).hasClass("prise") ) {
+				help_id = game_num + "" + ((parseInt( index ) + re) % 3);
+				change_id = game_num + "" + ((parseInt( index ) + (re % 2 ) + 1 ) % 3);
+				$("#" + change_id).removeClass("open_box");
+			} else {
+				next_id = game_num + "" + ((parseInt( index ) + 1) % 3);
+				if( $("#" + next_id).hasClass("prise") ) {
+					help_id = game_num + "" + ((parseInt( index ) + 2) % 3);
+					change_id = next_id;
+				} else {
+					help_id = next_id;
+					change_id = game_num + "" + ((parseInt( index ) + 2) % 3);	
+				}
+			}
+			$("#" + help_id).addClass("open_box").html("木有");		
+			$("#" + change_id).html("???");	
+			//$("#" + help_id).animate({outlineWidth:"10px"}, "slow").animate({outlineWidth:"0px"}, "slow");
+
+			$(".a").removeClass("a");
+
+			//$("#game").append("<div style='clear:both;' id='s" + game_num + "'><div class='text_box'>请选择：To 换 or Not To 换?</div><div class='change btn_box'>换换更健康</div><div class='not_change btn_box'>换你妹夫啊</div></div><br/>");
+
+			$(".btn_box").click(function(){
+				$(".btn_box").remove();
+				$("#s" + game_num).append("<div class='text_box'>" + $(this).html() + "</div>");
+
+				if( $(this).hasClass("change") ) {
+					cgame_num ++;
+					$("#" + this_id).removeClass("select_box").html("???");
+					$("#" + change_id).addClass("open_box").addClass("select_box");
+					if( $("#" + change_id).hasClass("prise") ){
+						$("#" + change_id).html("中奖啦！");
+						cwin_num++;
+						$("#s" + game_num).append("<div class='text_box'>WIN !!!</div>");
+					} else {
+						$("#" + change_id).html("艹木有!");
+						clost_num++;
+						$("#s" + game_num).append("<div class='text_box'>LOST !!!</div>");
+					}
+				} else {
+					ncgame_num++;
+					$("#" + this_id).addClass("open_box");
+					if($("#" + this_id).hasClass("prise")){
+						$("#" + this_id).html("中奖啦！");
+						ncwin_num++;
+						$("#s" + game_num).append("<div class='text_box'>WIN !!!</div>");
+					} else {
+						$("#" + this_id).html("艹木有！");
+						nclost_num++;
+						$("#s" + game_num).append("<div class='text_box'>LOST !!!</div>");
+					}
+				}	
+
+				$("#game").append("<div style='clear:both;' id='g" + game_num + "'></div><div class='again btn_box'>再拉一菊</div><div class='end btn_box'>查看酱果</div></div>");
+
+				$(".btn_box").click(function(){
+					$(".btn_box").remove();
+					if($(this).hasClass("again")) {
+						newGame();
+					} else {
+
+						$("#game").append("<br/><br/><table width='300' height='118' border='1'><tr><th></th><th>中奖！</th><th>次奥！</th></tr><tr><td>换</td><td>" + cwin_num + "(" + (cwin_num/cgame_num).toPrecision(4)*100 + "%)</td><td>"+ clost_num + "(" +(clost_num/cgame_num).toPrecision(4)*100 +"%)</td></tr><tr><td>不换</td><td>"+ncwin_num+"("+ (ncwin_num/ncgame_num).toPrecision(4)*100 +"%)</td><td>"+nclost_num+"("+(nclost_num/ncgame_num).toPrecision(4)*100+"%)</td></tr></table><div style='clear:both'><br/><input type='button' id='go"+ Math.random() +"' value='继续游戏'></button></div>");
+
+						$(":button").click(function(){
+							var cwin_num = 0;
+							var clost_num = 0;
+							var ncwin_num = 0;
+							var nclost_num = 0;
+							var game_num = 0;
+							var cgame_num =0;
+							var ncgame_num = 0;
+							$(this).remove();
+							newGame();
+						});
+					}
+				});	
+
+
+			});
+
+
+		});
+		
+	}
+
+	
+	$(document).ready(function(){
+		$("#go").click(function(){
+			$("#go").hide();
+			newGame();
+		});
+	});
+	
+</script>
+
+<div id="game">
+	<input type="button" id="go" value="开始游戏"></button>
+</div>
+
+<br/>
+<br/>

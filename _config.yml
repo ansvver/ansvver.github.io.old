@@ -1,0 +1,61 @@
+# Site settings
+title: "Yabuhoo!"
+keywords: "linux, algorithm, internet, ML, DM, yabuhoo, geek, github, atomatrix"
+description: "Enjoy Geek Fun！"
+baseurl: ""
+url: "http://yabuhoo.com"
+highlighter: pygments
+paginate: 5
+author:
+    name: shsfoolish
+    github: shsfoolish
+    email:
+    gitcafe: geekeeper
+    twitter:
+    facebook:
+    googleplus:
+    weibo: 3777448665
+qiniudn: //yabuhoo.qiniudn.com
+atom_path: /atom.xml
+rss_path: /rss.xml
+logoPic: //yabuhoo.qiniudn.com/images/logo.png
+
+# Build settings
+# markdown: redcarpet
+# redcarpet:
+#     extensions: ["fenced_code_blocks", "tables", "highlight", "strikethrough"]
+
+# pygments: true
+mardown: redcarpet
+redcarpet:
+    extensions: ["fenced_code_blocks", "tables", "highlight", "strikethrough"]
+
+# markdown: kramdown
+permalink: /:title.html
+
+# comment
+comments:
+    duoshuo:
+        name: yabuhoo
+        rcomments:
+            num: 10
+            avatar: 0
+            time: 0
+            title: 0
+            admin: 0
+            length: 26
+# 网站统计
+analytics:
+    baidu:
+        siteid: 36de4046527c18b63ecb1d1651371f88
+
+# 数学公式
+mathjax: true
+
+# blogroll
+blogroll: true
+brlist:
+    - text: "搜不狐"
+      url : //www.sobuhu.com/
+    - text: "Oilbeater"
+      url : //oilbeater.com/
