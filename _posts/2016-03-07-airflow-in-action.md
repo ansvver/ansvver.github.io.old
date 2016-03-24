@@ -52,7 +52,7 @@ tags: [Airflow]
 
 #### 下载安装与配置
 
-##### 安装
+- 安装
 
 {% highlight bash %}
 # 可选，默认是~/airflow
@@ -68,7 +68,7 @@ airflow initdb
 
 安装后`airflow webserver`就可以开启后台管理界面了。
 
-##### 简单的登录密码设置
+- 简单的登录密码设置
 
 Airflow提供一个类似插件的方式让使用者可以更好地按自己的需求定制，[这里](http://pythonhosted.org/airflow/installation.html)列出了官方的一定Extra Packages.
 
@@ -108,7 +108,7 @@ exit()
 
 重启webserver即可看见登录页面。
 
-##### 设置Email功能
+- 设置Email功能
 
 Email功能也是一个十分实用的功能，下面以126的smtp服务为例，在`airflow.cfg`设置smtp：
 
@@ -145,7 +145,7 @@ airflow scheduler
 2. 测试任务脚本(command)
 3. WebUI 自查
 
-###### 编写任务脚本(存放${AIRFLOW_HOME}/dags下)
+- 编写任务脚本(存放${AIRFLOW_HOME}/dags下)
 
 下面是一个简单的示例：
 
@@ -229,7 +229,7 @@ trigger_rule = 'all_done',
 
 ![]({{ site.qiniudn }}/images/2016/03/13.png)
 
-###### 测试任务脚本(command)
+- 测试任务脚本(command)
 
 Example - ${AIRFLOW_HOME}/test_impoort.py：
 
@@ -254,7 +254,6 @@ run_test = BashOperator(
     task_id = 'test_import_task',
     bash_command = 'cd /home/jiwoDev/xiaohei/tmp; python test_import.py',
     dag = dag)
- 
 {% endhighlight %}
 
 1. `$ cd ${AIRFLOW_HOME}/dags`
@@ -269,7 +268,7 @@ run_test = BashOperator(
 
 6. `$ airflow backfill test_import_dag -s 2016-3-4 \ -e 2016-3-7` \# 对dag进行某段时间内的完整测试
 
-###### WebUI自查
+- WebUI自查
 
 ![]({{ site.qiniudn }}/images/2016/03/14.png)
 ![]({{ site.qiniudn }}/images/2016/03/15.png)
@@ -277,4 +276,5 @@ run_test = BashOperator(
 #### 相关资源
 
 源码： [https://github.com/airbnb/airflow](https://github.com/airbnb/airflow/)
+
 官方文档： [http://pythonhosted.org/airflow/](http://pythonhosted.org/airflow/)

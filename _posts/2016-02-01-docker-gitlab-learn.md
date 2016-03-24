@@ -47,7 +47,7 @@ tags: [Docker]
 
 Step 1. Launch a postgresql container
 
-{% highlight scheme %}
+{% highlight bash %}
 docker run --name gitlab-postgresql -d \
     --env 'DB_NAME=gitlabhq_production' \
     --env 'DB_USER=gitlab' --env 'DB_PASS=password' \
@@ -57,7 +57,7 @@ docker run --name gitlab-postgresql -d \
 
 Step 2. Launch a redis container
 
-{% highlight scheme %}
+{% highlight bash %}
 docker run --name gitlab-redis -d \
     --volume /srv/docker/gitlab/redis:/var/lib/redis \
     sameersbn/redis:latest
@@ -65,7 +65,7 @@ docker run --name gitlab-redis -d \
 
 Step 3. Launch the gitlab container
 
-{% highlight scheme %}
+{% highlight bash %}
 docker run --name gitlab -d \
     --link gitlab-postgresql:postgresql --link gitlab-redis:redisio \
     --publish 10022:22 --publish 10080:80 \
